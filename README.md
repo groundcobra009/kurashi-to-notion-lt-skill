@@ -1,8 +1,27 @@
-# Sincerely Slide Skill V2
+# Lightning Talk Slide Skill
 
-トヨマネ式メソッド + Cynthialyデザインシステム + ルバート図解パターンによるPowerPointスライド自動生成スキル。
+Mac風ウィンドウフレームデザインのLT（Lightning Talk）スライド自動生成スキル。
 
-Claude Codeに指示するだけで、全22パターンの高品質ビジネススライドを自動生成します。
+Claude Codeに指示するだけで、10分間のLTに最適化されたスライドを自動生成します。
+
+## デザイン
+
+<img src="img/profile.png" alt="けいたろう プロフィール" width="200" />
+
+**スピーカー: けいたろう**
+
+### カラーパレット
+
+| 変数名 | HEX | 用途 |
+|--------|-----|------|
+| `FRAME_BROWN` | `#C4A882` | ウィンドウフレーム枠線 |
+| `TITLE_BAR` | `#2D2D2D` | タイトルバー背景 |
+| `TRAFFIC_RED` | `#FF5F57` | トラフィックライト（赤） |
+| `TRAFFIC_YELLOW` | `#FFBD2E` | トラフィックライト（黄） |
+| `TRAFFIC_GREEN` | `#28C840` | トラフィックライト（緑） |
+| `HEADER_GRAY` | `#EEEEEE` | ヘッダー背景 |
+| `BADGE_BG` | `#F5C518` | Lightning Talkバッジ |
+| `TEXT_BLACK` | `#333333` | メインテキスト |
 
 ## セットアップ
 
@@ -12,8 +31,6 @@ npm install
 
 ## 使い方
 
-`scripts/template.js` をrequireしてスクリプトを作成・実行します。
-
 ```javascript
 const t = require("./scripts/template.js");
 const pptxgen = t.pptxgen;
@@ -21,119 +38,97 @@ const pptxgen = t.pptxgen;
 var pres = new pptxgen();
 pres.layout = t.config.layout;
 
-t.addTitleSlide(pres, "タイトル", "サブタイトル", "作成者");
-// ... スライドを追加 ...
+// 表紙
+t.addLTTitleSlide(pres, "タイトル", "サブタイトル", "けいたろう");
 
-pres.writeFile({ fileName: "output/presentation.pptx" });
+// 自己紹介（プロフィール画像付き）
+t.addLTProfileSlide(pres, "けいたろう", [
+  "エンジニア",
+  "趣味: コーディング"
+], "img/profile.png");
+
+// コンテンツ
+t.addLTContentSlide(pres, "見出し", "本文テキスト");
+
+// 出力
+pres.writeFile({ fileName: "/home/user/output/my_lt.pptx" });
 ```
 
-## 利用可能な22パターン
+## 利用可能な7パターン
 
-| # | パターン | 用途 |
-|---|---------|------|
-| 1 | 表紙 | プレゼンの冒頭 |
-| 2 | サマリー | 結論と理由の提示 |
-| 3 | セクション扉 | 章の区切り |
-| 4 | 本文 | テキスト中心の説明 |
-| 5 | 列挙型 | 番号付きリスト |
-| 6 | 2カラム比較 | 左右2列の比較 |
-| 7 | 統計数値 | KPI・数値の強調 |
-| 8 | まとめ | 結論とNext Steps |
-| 9 | 画像 | 画像の表示 |
-| 10 | グラフ | 棒・円・折れ線グラフ |
-| 11 | フロー（横型） | 横方向のプロセスフロー |
-| 11b | フロー（縦型） | 縦方向のプロセスフロー |
-| 12 | 比較対照 | 2要素の詳細比較 |
-| 13 | 4象限マトリックス | 2軸4領域の分類 |
-| 14 | サイクル図 | 循環プロセス |
-| 15 | ガントチャート | スケジュール・工程表 |
-| 16 | テーブル | データ一覧・比較表 |
-| 17 | 背景型 | カテゴリ＋項目リスト |
-| 18 | 拡散型 | 1→多の分岐構造 |
-| 19 | 上昇型 | 段階的な成長・ステップ |
-| 20 | フロー表型 | フロー矢印＋マトリックス表 |
-| 21 | フローマトリックス型 | フロー矢印＋行列マトリックス |
-| 22 | マトリックス型 | 行ラベル×列ラベルの表 |
+| # | パターン | 関数名 | 用途 |
+|---|---------|--------|------|
+| 1 | 表紙 | `addLTTitleSlide` | LTの冒頭タイトル |
+| 2 | 自己紹介 | `addLTProfileSlide` | プロフィール画像＋箇条書き |
+| 3 | コンテンツ | `addLTContentSlide` | 見出し＋本文 |
+| 4 | ポイント付き | `addLTPointSlide` | 本文＋ハイライトボックス |
+| 5 | 画像 | `addLTImageSlide` | 画像表示スライド |
+| 6 | リスト | `addLTListSlide` | 番号付き箇条書き |
+| 7 | クロージング | `addLTClosingSlide` | 締めくくり |
 
-## 環境変数（GitHub Secrets）
+## 各パターンの使い方
 
-スライドを `downloads/` にプッシュすると、GitHub Actionsで自動通知が実行されます。
+### パターン 1: 表紙
 
-### 現在の設定
+```javascript
+t.addLTTitleSlide(pres, "タイトル", "サブタイトル", "けいたろう");
+```
 
-個人プロジェクトのため、メールの宛先・送信元などはワークフロー内にハードコーディングしています。
+### パターン 2: 自己紹介
 
-| 項目 | 値 | 設定場所 |
-|------|-----|----------|
-| SMTPサーバー | `smtp.gmail.com` | ワークフロー内に直接記載 |
-| SMTPポート | `587`（TLS） | ワークフロー内に直接記載 |
-| 認証ユーザー | `nakashima.keitarou@gmail.com` | ワークフロー内に直接記載 |
-| 送信元 | `nakashima.keitarou@gmail.com` | ワークフロー内に直接記載 |
-| 送信先 | `nakashima.keitarou@gmail.com` | ワークフロー内に直接記載 |
-| 認証パスワード | （非公開） | GitHub Secrets（`MAIL_PASSWORD`） |
+```javascript
+t.addLTProfileSlide(pres, "けいたろう", [
+  "エンジニア",
+  "趣味: コーディング",
+  "好きな技術: Node.js"
+], "img/profile.png");  // 画像パス（省略可）
+```
 
-### GitHub Secretsに設定が必要な変数
+### パターン 3: コンテンツ
 
-リポジトリの **Settings > Secrets and variables > Actions** で設定してください。
+```javascript
+t.addLTContentSlide(pres, "見出しタイトル", "本文テキスト");
+```
 
-| 変数名 | 必須 | 説明 |
-|--------|------|------|
-| `MAIL_PASSWORD` | 任意 | Googleアプリパスワード。未設定の場合メール送信はスキップされます。 |
-| `DISCORD_WEBHOOK_URL` | 任意 | DiscordチャンネルのWebhook URL。未設定の場合Discord通知はスキップされます。 |
+### パターン 4: ポイント付きコンテンツ
 
-### MAIL_PASSWORD の取得方法（Googleアプリパスワード）
+```javascript
+t.addLTPointSlide(pres, "見出し", "本文テキスト", "ポイント", "ポイントの説明文");
+```
 
-1. [Googleアカウント](https://myaccount.google.com/) にログイン
-2. **セキュリティ** > **2段階認証プロセス** を有効化（まだの場合）
-3. **2段階認証プロセス** のページ下部にある **アプリ パスワード** をクリック
-4. アプリ名に「GitHub Actions」など任意の名前を入力して **作成**
-5. 表示された16文字のパスワードをコピー
-6. GitHubリポジトリの **Settings > Secrets and variables > Actions > New repository secret** で:
-   - Name: `MAIL_PASSWORD`
-   - Secret: コピーした16文字のパスワード
+### パターン 5: 画像
 
-> **注意**: 通常のGmailパスワードではSMTP認証が失敗します。必ずアプリパスワードを使用してください。
+```javascript
+t.addLTImageSlide(pres, "見出し", "img/profile.png", "キャプション");
+```
 
-## デザインルール（カラー・フォント・レイアウト）
+### パターン 6: リスト
 
-### カラーパレット
+```javascript
+t.addLTListSlide(pres, "見出し", [
+  { title: "項目名", description: "説明文" },
+  { title: "項目名", description: "説明文" }
+]);
+// または文字列の配列:
+t.addLTListSlide(pres, "見出し", ["項目1", "項目2", "項目3"]);
+```
 
-| 変数名 | HEX | 用途 |
-|--------|-----|------|
-| `DARK_GREEN` | `#0D2623` | メインカラー。タイトルバー、ヘッダー背景、テキスト（暗）|
-| `CREAM_YELLOW` | `#E8DE9F` | アクセントカラー。番号バッジ、右カラムヘッダー、矢印 |
-| `LIGHT_GRAY` | `#F3F3F3` | コンテンツ背景、カードベース |
-| `TEXT_DARK` | `#0D2623` | 見出し・強調テキスト |
-| `TEXT_MEDIUM` | `#434343` | 本文テキスト |
-| `TEXT_LIGHT` | `#595959` | 補助テキスト、比較対照左ヘッダー |
-| `WHITE` | `#FFFFFF` | 白テキスト（暗背景上）|
-| `HIGHLIGHT_YELLOW` | `#FFFF00` | ハイライト |
+### パターン 7: クロージング
 
-### グラフ用カラーパレット（8色）
+```javascript
+t.addLTClosingSlide(pres, "ありがとうございました", "メッセージ", "けいたろう");
+```
 
-`#0D2623`, `#E8DE9F`, `#5B8A72`, `#D4A574`, `#7BA3C9`, `#C9917B`, `#8FC9A9`, `#C9C97B`
+## プロフィール画像
 
-### フォント
+スピーカーのプロフィール画像は `img/` ディレクトリに配置してください。
 
-| 項目 | 値 |
-|------|-----|
-| フォントファミリー | Noto Sans JP |
-| XL | 40pt |
-| L | 32pt |
-| MP | 24pt |
-| M | 20pt |
-| SP | 18pt |
-| S（標準） | 16pt（最小フォントサイズ）|
-| XS（出所表記のみ） | 12pt |
-| SEC（セクション番号） | 80pt |
+```
+img/
+└── profile.png   ← けいたろうのプロフィール画像
+```
 
-### レイアウト
-
-| 項目 | 値 |
-|------|-----|
-| アスペクト比 | 16:9 |
-| 左右マージン | 0.6in |
-| コンテンツ幅 | 8.8in |
+自己紹介スライドや画像スライドで使用されます。
 
 ## テスト
 
@@ -141,4 +136,19 @@ pres.writeFile({ fileName: "output/presentation.pptx" });
 npm test
 ```
 
-全22パターンのテストスライドが `output/test_all_patterns.pptx` に生成されます。
+全7パターンのテストスライドが `/home/user/output/test_lt_patterns.pptx` に生成されます。
+
+## フォルダ構成
+
+```
+├── img/              ← プロフィール画像
+├── scripts/
+│   ├── template.js   ← LTテンプレート（7パターン）
+│   └── test.js       ← 動作テスト
+├── downloads/
+│   ├── pptx/         ← ダウンロード用PPTX
+│   └── pdf/          ← ダウンロード用PDF
+├── CLAUDE.md         ← Claude Code用指示書
+├── README.md
+└── package.json
+```
