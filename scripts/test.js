@@ -34,7 +34,7 @@ t.addLTPointSlide(pres, "テンプレートの特徴",
 );
 
 // パターン 5: 画像スライド（画像パスなし）
-t.addLTImageSlide(pres, "けいたろうのプロフィール", null, "プロフィール画像（img/profile.png を配置してください）");
+t.addLTImageSlide(pres, "けいたろうのプロフィール", "img/photo-id.jpg", "けいたろうのプロフィール画像");
 
 // パターン 6: リストスライド
 t.addLTListSlide(pres, "まとめ - 3つのポイント", [

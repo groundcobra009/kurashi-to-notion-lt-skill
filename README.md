@@ -12,7 +12,7 @@ Claude Codeに「LTスライドを作って」と指示するだけで、Mac風�
 
 ## デザインの特徴
 
-<img src="img/profile.png" alt="けいたろう プロフィール" width="200" />
+<img src="img/photo-id.jpg" alt="けいたろう プロフィール" width="200" />
 
 **スピーカー: けいたろう**
 
@@ -55,7 +55,7 @@ t.addLTTitleSlide(pres, "タイトル", "サブタイトル", "けいたろう")
 t.addLTProfileSlide(pres, "けいたろう", [
   "エンジニア",
   "趣味: コーディング"
-], "img/profile.png");
+], "img/photo-id.jpg");
 
 // コンテンツ
 t.addLTContentSlide(pres, "見出し", "本文テキスト");
@@ -98,7 +98,7 @@ t.addLTProfileSlide(pres, "けいたろう", [
   "エンジニア",
   "趣味: コーディング",
   "好きな技術: Node.js"
-], "img/profile.png");  // 画像パス（省略可）
+], "img/photo-id.jpg");  // 画像パス（省略可）
 ```
 
 ### パターン 3: コンテンツ
@@ -116,7 +116,7 @@ t.addLTPointSlide(pres, "見出し", "本文テキスト", "ポイント", "ポ�
 ### パターン 5: 画像
 
 ```javascript
-t.addLTImageSlide(pres, "見出し", "img/profile.png", "キャプション");
+t.addLTImageSlide(pres, "見出し", "img/photo-id.jpg", "キャプション");
 ```
 
 ### パターン 6: リスト
@@ -142,7 +142,7 @@ t.addLTClosingSlide(pres, "ありがとうございました", "メッセージ"
 
 ```
 img/
-└── profile.png   ← けいたろうのプロフィール画像
+└── photo-id.jpg   ← けいたろうのプロフィール画像
 ```
 
 自己紹介スライドや画像スライドで使用されます。

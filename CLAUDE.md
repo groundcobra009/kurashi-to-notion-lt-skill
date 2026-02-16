@@ -9,7 +9,7 @@
 - **公式テンプレート**: [Googleスライド](https://docs.google.com/presentation/d/1wkZgkivteQQaPGU0nrBlk8yjcT6MJNY7nGjs2PhTnyQ/edit?usp=sharing)
 - **出力先**: `/home/user/output/` ディレクトリ
 - **ダウンロードフォルダ**: `downloads/pptx/`（PPTX）、`downloads/pdf/`（PDF）
-- **プロフィール画像**: `img/profile.png`
+- **プロフィール画像**: `img/photo-id.jpg`
 - **使用ライブラリ**: pptxgenjs (Node.js)
 - **スピーカー**: けいたろう
 
@@ -119,7 +119,7 @@ t.addLTProfileSlide(pres, "けいたろう", [
   "エンジニア",
   "趣味: コーディング",
   "好きな技術: Node.js"
-], "img/profile.png");  // 画像パス（nullで省略可）
+], "img/photo-id.jpg");  // 画像パス（nullで省略可）
 ```
 
 ### パターン 3: コンテンツ
@@ -141,7 +141,7 @@ t.addLTPointSlide(pres, "見出し",
 ### パターン 5: 画像
 
 ```javascript
-t.addLTImageSlide(pres, "見出し", "img/profile.png", "キャプション");
+t.addLTImageSlide(pres, "見出し", "img/photo-id.jpg", "キャプション");
 ```
 
 ### パターン 6: リスト
@@ -201,7 +201,7 @@ t.addLTClosingSlide(pres, "ありがとうございました", "ご質問はお�
 
 ## プロフィール画像
 
-けいたろうのプロフィール画像は `img/profile.png` に配置してください。
+けいたろうのプロフィール画像は `img/photo-id.jpg` を使用します。
 自己紹介スライド（パターン2）と画像スライド（パターン5）で使用できます。
 
 ## 重要な注意事項
